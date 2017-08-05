@@ -1,0 +1,103 @@
+app.controller("editorController", ['$scope', 'Characters', 'Combine', 'Coordinates', function ($scope, Characters, Combine, Coordinates) {
+  var s = $scope;
+  s.characters = {};
+  s.character = '';
+
+  s.loadData = function() {
+    s.character = s.selected;
+    if (s.character && s.character.length > 0)
+    {
+      Characters.get(function(resp){
+        s.characters = resp.characters;
+        Coordinates.get({character: s.selected}, function(resp_2){
+          shape = resp_2.coordinates;
+          s.character = s.selected;
+          repaint(shape);
+        });
+      });
+    }
+  };
+
+  s.init = function() {
+    Characters.get(function(resp){
+      s.characters = resp.characters;
+    });
+
+    var c = $("#canvas").get(0);
+    var ctx = c.getContext("2d");
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.strokeStyle = '#ff9';
+
+    ctx.beginPath();
+    ctx.moveTo(0, 200);
+    ctx.lineTo(200, 200);
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, 400);
+    ctx.lineTo(200, 400);
+    ctx.closePath();
+    ctx.stroke();
+  };
+
+  s.submit = function() {
+    Characters.get({value: s.character, shape: JSON.stringify(shape)}, function(resp){
+      s.characters = resp.characters;
+    });
+  };
+
+  function repaint(this_shape)
+  {
+    var c = $("#canvas").get(0);
+    var ctx = c.getContext("2d");
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.strokeStyle = '#000';
+
+    for (var j = 0; j < this_shape.length; j++)
+    {
+      ctx.beginPath();
+      ctx.moveTo(this_shape[j][0].x, this_shape[j][0].y);
+      for (var i = 1; i < this_shape[j].length; i++)
+        ctx.lineTo(this_shape[j][i].x, this_shape[j][i].y);
+      for (var i = this_shape[j].length - 1; i > 0; i--)
+        ctx.lineTo(this_shape[j][i].x, this_shape[j][i].y);
+      ctx.closePath();
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = '#ff9';
+
+    ctx.beginPath();
+    ctx.moveTo(0, 200);
+    ctx.lineTo(200, 200);
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, 400);
+    ctx.lineTo(200, 400);
+    ctx.closePath();
+    ctx.stroke();
+
+  }
+
+  s.combine = function() {
+    Combine.get({value: s.character, shape: JSON.stringify(shape)});
+  };
+
+  s.clear = function () {
+    var c = $("#canvas").get(0);
+    var ctx = c.getContext("2d");
+    ctx.clearRect(0, 0, c.width, c.height);
+
+    shape = [];
+  };
+
+  s.redraw = function(e) {
+    var last_change = [].concat(shape[shape.length - 1], {x: e.x - e.target.offsetLeft, y: e.y - e.target.offsetTop});
+    var this_shape = [].concat(shape);
+    this_shape[this_shape.length - 1] = last_change;
+    repaint(this_shape);
+  };
+}]);

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Omikes</title>
+  <%= csrf_meta_tags %>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body style="height: 100%; overflow: hidden">
+<div ng-app="app" ng-controller="editorController" ng-init="init()" style="text-align: center">
+  <canvas id="canvas" width="200" height="600" style="border: 1px greenyellow solid" ng-mousemove="redraw($event)" get-click>
+    Your browser does not support the HTML5 canvas tag.
+  </canvas>
+  <button type="button" ng-click="loadData()" style="display: none"></button>
+  <select ng-options="character.value as character.value for character in characters" ng-model="selected" onchange="$(this).prev().click()"></select>
+  <input type="text" ng-model="character" />
+  <button type="button" ng-click="combine()">Combine</button>
+  <button type="button" ng-click="submit()">Save</button>
+  <button type="button" ng-click="clear()">Clear</button>
+</div>
+</body>
+</html>

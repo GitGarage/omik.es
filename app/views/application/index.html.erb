@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>omik.es</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class="black" style="height: 100%; overflow: hidden">
+    <div ng-app="app" ng-controller="mainController" ng-init="init()" style="text-align: center">
+      <canvas style="cursor: pointer" ng-mousedown="mouseDown($event)" ng-mousemove="mouseMove($event)" ng-mouseup="mouseUp()" class="black" id="canvas" width="600" height="600" press-key>
+        Your browser does not support the HTML5 canvas tag.
+      </canvas>
+      <draw draw-text="'omik.es'"></draw>
+      <draw draw-spiral></draw>
+    </div>
+  </body>
+</html>

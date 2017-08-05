@@ -1,0 +1,66 @@
+app.controller("mainController", ['$scope', function ($scope) {
+  var s = $scope;
+  var clientX = 0;
+  var clientY = 0;
+  var boolean = false;
+
+  s.init = function() {
+    var height = $(window).height();
+    var width = $(window).width();
+    var size = height > width ? width : height;
+    var canvas = $("#canvas");
+    canvas.attr('width', size);
+    canvas.attr('height', size);
+
+    canvas.focus();
+    draw(rotate_y(n2, rotate_x(n1)), 10, true);
+
+    document.addEventListener("touchstart", touchHandler, true);
+    document.addEventListener("touchmove", touchHandler, true);
+    document.addEventListener("touchend", touchHandler, true);
+    document.addEventListener("touchcancel", touchHandler, true);
+  };
+
+  function touchHandler(event) {
+    var touch = event.changedTouches[0];
+
+    var simulatedEvent = document.createEvent("MouseEvent");
+    simulatedEvent.initMouseEvent({
+          touchstart: "mousedown",
+          touchmove: "mousemove",
+          touchend: "mouseup"
+        }[event.type], true, true, window, 1,
+        touch.screenX, touch.screenY,
+        touch.clientX, touch.clientY, false,
+        false, false, false, 0, null);
+
+    touch.target.dispatchEvent(simulatedEvent);
+    event.preventDefault();
+  }
+
+  s.mouseUp = function(){
+    boolean = false;
+  };
+
+  s.mouseDown = function(event){
+    boolean = true;
+    clientX = event.clientX;
+    clientY = event.clientY;
+  };
+
+  s.mouseMove = function(event){
+    if (boolean)
+    {
+      var cX = (event.clientX - clientX) * 0.005;
+      var cY = (clientY - event.clientY) * 0.005;
+      n2 += cX;
+      n1 += cY;
+      clientX = event.clientX;
+      clientY = event.clientY;
+
+      coords = angular.copy(template);
+      draw(rotate_y(n2, rotate_x(n1)), 10, true);
+    }
+  };
+
+}]);

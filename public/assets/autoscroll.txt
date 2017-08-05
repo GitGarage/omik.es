@@ -1,0 +1,37 @@
+1. Copy my script.txt file a http://omik.es/assets/script.txt
+
+2. Open you browser terminal; The terminal is modtly used for debugging code, 
+but is relatively simple to use (copy the text file from step 1, paste next to the blue arrow in console, and hit enter.)
+
+Opening console by Web Browser type.
+
+Opera -  CTRL + SHIFT + I
+
+Firefox - CTRL + SHIFT + K to open the Web console (COMMAND + SHIFT + K on Macs).
+
+Chrome -  CTRL + SHIFT + J
+
+LOOK FOR BLUE rightward pointing arrow within the terminal! 
+You have have to scroll down to find it sometimes. 
+After clicking just to the right of this arrow, paste the script above and hit enter.
+
+Final Step: confirm success of the script. 
+In the top right corner of the new beta Tiny Chat,
+ the dumb blue and white advertising buttons are now replaced with two new options, 
+auto-scroll and stop autoscroll.
+
+I was inspired to write this due to the constant annoyance of having to scroll 
+to the bottom of the chat each time I looked at another browser window.
+
+Unfortunately this prevented users to EVER to be able to scroll up, so I added a second button
+which pauses the functionality of the autoscroll until it is re-enabled.
+
+One problem with the program is that the script has to be reentered every time you refresh, 
+but I have a plan for that on the works.
+
+Special Thanks to all those to help my test this little side hobby of mine.
+
+Please enjoy
+
+Regards, 
+Michael O'Riley
